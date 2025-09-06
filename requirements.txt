@@ -1,0 +1,8 @@
+python-telegram-bot>=21.6,<22
+google-cloud-texttospeech>=2.16
+google-cloud-translate>=3.15
+google-genai>=0.3.0
+python-dotenv>=1.0
+eng-to-ipa>=0.0.2
+inflect>=7.0.0
+google-cloud-vision>=3.6

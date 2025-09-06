@@ -1,0 +1,5 @@
+translate-sa.json
+checkTTS lang.py
+.env
+venv/
+logs/
