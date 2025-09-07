@@ -1,6 +1,6 @@
-# EnglishDailyBot — Telegram English Coach (Gemini + Google Cloud)
+# GG-Translate — Telegram English Coach (Gemini + Google Cloud)
 
-A Telegram bot that helps you improve English every day:
+This Telegram bot, called GG-teacher, uses Gemini and Google Cloud to help you with multiple languages. You can send text or a picture to the bot.
 
 - Polishes your sentence to **natural, native-like English** (Gemini on Vertex AI)
 - Gives **Concise** + **Style variants** (Formal / Friendly)
@@ -27,7 +27,7 @@ I ate this with porridge as a kid.
 🔉 Pronunciation (IPA)
 • Polished: …
 ```
-Tap a flag button (🇯🇵 / 🇨🇳 / 🇹🇼 / 🇩🇪 / 🇬🇧 / 🇫🇮 / 🇰🇷 / 🇹🇭 / 🇻🇳 / 🇺🇸) to get **Translate + MP3** in that language/voice.
+Tap a flag button (🇯🇵 / 🇨🇳 / 🇹🇼 / 🇩🇪 / 🇬🇧 / 🇫🇮 / 🇰🇷  / 🇺k ) to get **Translate + MP3** in that language/voice.
 
 ---
 
@@ -60,8 +60,8 @@ Tap a flag button (🇯🇵 / 🇨🇳 / 🇹🇼 / 🇩🇪 / 🇬🇧 / 🇫�
 
 ### 1) Clone & install
 ```bash
-git clone https://github.com/<you>/EnglishDailyBot.git
-cd EnglishDailyBot
+git clone https://github.com/ti-tipakorn/GG-translate
+cd GG-translate
 python -m pip install -r requirements.txt
 ```
 
@@ -74,6 +74,8 @@ Talk to **@BotFather** → create a bot → copy the token.
 - Create a **Service Account**, grant permissions (Vertex AI User, Cloud Translation User, Text-to-Speech User are typical), and download the key JSON for **local** development.
 - Save it as `C:\keys\translate-sa.json` (or adjust the path in `.env`).
 
+**  You have to pay to use the Google Translate API. **
+
 > Prefer **Workload Identity Federation** in production to avoid storing long-lived keys.
 
 ### 4) Environment file
@@ -81,7 +83,7 @@ Create `C:\keys\.env` with:
 ```ini
 # Core
 TELEGRAM_BOT_TOKEN=PASTE_TELEGRAM_TOKEN
-GCP_PROJECT_ID=improve-my-eng
+GCP_PROJECT_ID="you google project ID from goolge cloud"
 GOOGLE_CLOUD_LOCATION=us-central1
 GEMINI_MODEL=gemini-2.0-flash-001
 GOOGLE_APPLICATION_CREDENTIALS=C:\keys\translate-sa.json
@@ -110,38 +112,6 @@ python C:\keys\daily_english.py
 - Use `/start` then send any English sentence
 - Tap the language buttons for Translate + MP3
 
----
-
-## Run as a Windows Service (NSSM)
-
-1. Create a small runner:
-
-**`C:\english-bot\run_bot.bat`**
-```bat
-@echo off
-cd /d C:\keys
-"C:\Users\%USERNAME%\AppData\Local\Programs\Python\Python313\python.exe" C:\keys\daily_english.py
-```
-
-2. Install with **NSSM**:
-```bat
-C:\tools\nssm\nssm.exe install EnglishDailyBot "C:\Windows\System32\cmd.exe" "/c C:\english-bot\run_bot.bat"
-C:\tools\nssm\nssm.exe set EnglishDailyBot AppDirectory C:\english-bot
-C:\tools\nssm\nssm.exe set EnglishDailyBot AppStdout C:\english-bot\svc.out.log
-C:\tools\nssm\nssm.exe set EnglishDailyBot AppStderr C:\english-bot\svc.err.log
-C:\tools\nssm\nssm.exe start EnglishDailyBot
-```
-
-3. Manage:
-```bat
-C:\tools\nssm\nssm.exe stop  EnglishDailyBot
-C:\tools\nssm\nssm.exe start EnglishDailyBot
-```
-
-If you see `SERVICE_PAUSED`, verify working directory, script path, and `.env` path.
-
----
-
 ## Usage
 - `/start` — help and language buttons
 - Send **text** or a small **.txt** (≤ 2 MB)
@@ -167,7 +137,7 @@ To change a **voice**, edit the corresponding `*_VOICE` in `.env` and restart th
 
 ---
 
-## Add another language
+## Add another language 
 1) Add a line to `LANG_OPTS`:
 ```python
 "fr": {"label":"🇫🇷 French", "tgt":"fr", "tts_lang":"fr-FR",
@@ -218,20 +188,10 @@ Pick one from the printed list and set it in `.env` (e.g., `JA_VOICE=ja-JP-Neura
 
 ## Project structure (suggested)
 ```
-C:\keys\
+C:\GG-tranlate\
   daily_english.py
   .env
-  translate-sa.json        # (local dev only — don’t commit)
-C:\english-bot\
-  run_bot.bat
-  svc.out.log
-  svc.err.log
-```
-
----
-
-## Notes on credentials
-For local dev, a **service account JSON** is fine. In production, prefer **Workload Identity Federation** to avoid storing long-lived keys. Never commit secrets.
+  translate-sa.json     
 
 ---
 👨‍💻 Author
@@ -239,4 +199,4 @@ Coded by ChatGPT (OpenAI).
 Customized, improved, and explained for practical use.
 
 ## License
-This project is for personal use only. FreeSimpleGUI is MIT-licensed.
+This project is for personal use only. MIT-licensed.
